@@ -20,6 +20,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './shared/filter.pipe';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { FilterPipe } from './shared/filter.pipe';
     DragDropModule,
     MatCardModule,
     FormsModule,
+    MatTooltipModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent],

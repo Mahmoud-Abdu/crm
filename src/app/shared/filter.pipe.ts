@@ -6,7 +6,7 @@ import { Deal } from '../deals/deal.model';
 })
 export class FilterPipe implements PipeTransform {
   transform(deals: Deal[], filterText: string) {
-    if (deals.length === 0 || filterText === '') return deals;
+    if (deals?.length === 0 || filterText === '') return deals;
     else {
       return deals.filter((deal) => {
         return (

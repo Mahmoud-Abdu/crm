@@ -14,14 +14,14 @@ import { Subscription } from 'rxjs/internal/Subscription';
 
  
 export class DealsComponent implements OnInit, AfterViewChecked, OnDestroy {
-
+  //im using |any to mute the developer tool warning in console
   subscription!: Subscription;
   deals!:  Deal[];
-  potentialValue!: Deal[];
-  focus!: Deal[];
-  contactMade!: Deal[];
-  offerSent!: Deal[];
-  gettingReady!: Deal[];
+  potentialValue!: Deal[]|any;
+  focus!: Deal[]|any;
+  contactMade!: Deal[]|any;
+  offerSent!: Deal[]|any;
+  gettingReady!: Deal[]|any;
   isMobile: boolean = false;
   filterText: string = "";
   constructor(private ds: DataService, private responsive: BreakpointObserver) {}
@@ -86,10 +86,24 @@ export class DealsComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.resetStatus('Contact Made', this.contactMade);
       this.resetStatus('Offer Sent', this.offerSent);
       this.resetStatus('Getting Ready', this.gettingReady);
-
-
     }
-  }
+  };
+
+  getTotalDealsTooltipText(stage:string, totalDeals: number|undefined) {
+    return `Total ${stage} Deals: ${totalDeals}`
+  };
+
+  getProbabilityStatusToolTipText(probabilityStatus: string) {
+    return `Probability Status ${probabilityStatus}`
+  };
+
+  getStateToolTiptext(state: string) {
+    return `Deal State: ${state}`
+  };
+
+  deleteDeal(i:number, deal:Deal[]) {
+    deal.splice(i, 1);
+   }
 
   
 }

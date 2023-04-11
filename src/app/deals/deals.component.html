@@ -2,6 +2,8 @@
   <div class="col-md-2 titleCol">
     <h1>Deals</h1>
   </div>
+
+  <!-- search and selection section -->
   <div class="col-8">
     <mat-form-field appearance="fill" style="margin-right: 20px">
       <mat-label>Segment: All</mat-label>
@@ -32,243 +34,390 @@
 
     <mat-form-field class="example-full-width" style="width: 14rem">
       <mat-label>Search by name or flag</mat-label>
-      <span matPrefix class="searchBar"
-        ><mat-icon matSuffix>search</mat-icon></span
-      >
+      <span matPrefix class="searchBar"><mat-icon matSuffix>search</mat-icon></span>
       <input type="text" matInput [(ngModel)]="filterText" />
     </mat-form-field>
   </div>
-  <div class="col-2" >
-    <button class="btn" [ngClass]="{'addBtnMobile': isMobile, 'addBtn': !isMobile}"> 
-      <i class="fa-solid fa-circle-plus" ></i> ADD DEAL
+  <div class="col-2">
+    <button class="btn" [ngClass]="{ addBtnMobile: isMobile, addBtn: !isMobile }">
+      <i class="fa-solid fa-circle-plus"></i> ADD DEAL
     </button>
   </div>
 </div>
 
-<div class="row">
+<!-- Drag and drop section -->
 
+<div class="row">
   <div class="col-md-12">
     <div cdkDropListGroup>
       <div class="row" style="display: flex; justify-content: center">
-        <div class="col-md-2" [ngClass]="{'phoneColWidth': isMobile}">
+        <div class="col-md-2" [ngClass]="{ phoneColWidth: isMobile }">
+
+
           <!-- Potential value -->
           <div class="example-container">
-            <h2>Potential value</h2>
+            <h3>Potential value</h3>
 
-            <div
-            [ngClass]="{'phoneWidth': isMobile}"
-              cdkDropList
-              [cdkDropListData]="potentialValue"
-              class="example-list"
-              (cdkDropListDropped)="drop($event)"
-            >
-              <div
-                class="card"
-                style="width: 15.4rem"
-                *ngFor="let client of potentialValue | filter:filterText"
-                cdkDrag
-              >
+            <div class="row idicatorsIconsRow">
+              <div class="col-sm-4 leftIndicatorIcon">
+                <mat-icon>assignment</mat-icon> <span class="totalDealsIndic">{{potentialValue?.length}}</span> 
+              </div>
+              <div class="col-sm-4 middleIndicatorIcon">
+                <span class="badge bg-secondary nok"
+                  [matTooltip]="getTotalDealsTooltipText('Potential Value', potentialValue?.length)">NOK</span>
+              </div>
+              <div class="col-sm-4 rightIndicatorIcon">
+                <mat-icon matBadge="10">
+                  notifications
+                </mat-icon>
+              </div>
+            </div>
+            <div [ngClass]="{ phoneWidth: isMobile }" cdkDropList [cdkDropListData]="potentialValue"
+              class="example-list" (cdkDropListDropped)="drop($event)">
+              <div class="card" style="width: 15.4rem" *ngFor="let client of potentialValue| filter : filterText; let i = index "
+                cdkDrag>
                 <div class="card-body">
-                  <h5 class="card-title">{{ client.company }}</h5>
-                  
+                  <div class="row">
+                    <div class="col-12 cardHeaderRow">
+                      <h5 class="card-title">{{ client.company }}</h5>   
+                      <mat-icon class="moreIcon" [matMenuTriggerFor]="menu">more_horiz</mat-icon>
+                         <mat-menu #menu="matMenu">
+                          <button mat-menu-item>
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                          </button>
+                          <button mat-menu-item disabled>
+                            <mat-icon>history</mat-icon>
+                            <span>View History</span>
+                          </button>
+                          <button mat-menu-item (click)="deleteDeal(i, potentialValue)">
+                            <mat-icon >delete</mat-icon>
+                            <span> Delete</span>
+                          </button>
+                        </mat-menu>
+                    </div>
+
+                  </div>
+
+
                   <h6 class="card-subtitle mb-2 text-muted">
-                    <span class="badge bg-secondary">{{ client.state }} </span> &nbsp;
-                    <span class="badge bg-primary">{{ client.probability_status }}</span>
+                    <span class="badge bg-secondary" [matTooltip]="getStateToolTiptext(client.state)">{{ client.state }} </span>
+                    &nbsp;
+                    <span class="badge bg-primary pointer" [matTooltip]="getProbabilityStatusToolTipText(client.probability_status)">
+                      {{client.probability_status}} </span>
                   </h6>
                   <p class="card-text">
                     {{ client.first_name }} {{ client.last_name }}
-                   </p>
-                   <p class="card-text">
-                    <span class="material-icons phoneIcon" >phone</span>
+                  </p>
+                  <p class="card-text">
+                    <span class="material-icons phoneIcon">phone</span>
                     {{ client.phone }}
                   </p>
                   <p class="card-text">
                     <span class="material-icons mailIcon">email</span>
                     {{ client.email }}
-                  </p> 
+                  </p>
                   <p class="card-text">
                     <span class="material-icons dateIcon">calendar_today</span>
-                    {{ client.date }}</p>
-                    <span class="badge bg-success">{{client.status}}</span>
+                    {{ client.date }}
+                  </p>
+                  <span class="badge bg-success">{{ client.status }}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-2 " [ngClass]="{'phoneColWidth': isMobile}">
+        <div class="col-md-2" [ngClass]="{ phoneColWidth: isMobile }">
           <!-- Focus -->
           <div class="example-container">
-            <h2>Focus</h2>
-            <div
-            [ngClass]="{'phoneWidth': isMobile}"
-              cdkDropList
-              [cdkDropListData]="focus"
-              class="example-list"
-              (cdkDropListDropped)="drop($event)"
-            >
-              <div
-                class="card"
-                style="width: 15.4rem"
-                *ngFor="let client of focus | filter:filterText"
-                cdkDrag
-              >
+            <h3>Focus</h3>
+            <div class="row idicatorsIconsRow">
+              <div class="col-sm-4 leftIndicatorIcon">
+                <mat-icon>assignment</mat-icon> <span class="totalDealsIndic">{{focus?.length}}</span> 
+              </div>
+              <div class="col-sm-4 middleIndicatorIcon">
+                <span class="badge bg-secondary nok" [matTooltip]="getTotalDealsTooltipText('Focus', focus?.length)">NOK</span>
+
+              </div>
+              <div class="col-sm-4 rightIndicatorIcon">
+                <mat-icon matBadge="10">
+                  notifications
+                </mat-icon>
+              </div>
+            </div>
+            <div [ngClass]="{ phoneWidth: isMobile }" cdkDropList [cdkDropListData]="focus" class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="card" style="width: 15.4rem" *ngFor="let client of focus | filter : filterText; let i = index" cdkDrag>
                 <div class="card-body">
-                  <h5 class="card-title">{{ client.company }}</h5>
+                  <div class="row">
+                    <div class="col-12 cardHeaderRow">
+                      <h5 class="card-title">{{ client.company }}</h5>  
+                      <mat-icon class="moreIcon" [matMenuTriggerFor]="menu">more_horiz</mat-icon>
+                         <mat-menu #menu="matMenu">
+                          <button mat-menu-item>
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                          </button>
+                          <button mat-menu-item disabled>
+                            <mat-icon>history</mat-icon>
+                            <span>View History</span>
+                          </button>
+                          <button mat-menu-item (click)="deleteDeal(i, focus)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                          </button>
+                        </mat-menu>
+                    </div>
+                  </div>
                   <h6 class="card-subtitle mb-2 text-muted">
-                    <span class="badge bg-secondary">{{ client.state }} </span> &nbsp;
-                    <span class="badge bg-primary">{{ client.probability_status }}</span>
+                    <span class="badge bg-secondary" [matTooltip]="getStateToolTiptext(client.state)">{{ client.state }} </span>
+                    &nbsp;
+                    <span class="badge bg-primary pointer" [matTooltip]="getProbabilityStatusToolTipText(client.probability_status)">{{
+                      client.probability_status
+                      }}</span>
                   </h6>
                   <p class="card-text">
                     {{ client.first_name }} {{ client.last_name }}
-                   </p>
-                   <p class="card-text">
-                    <span class="material-icons phoneIcon" >phone</span>
+                  </p>
+                  <p class="card-text">
+                    <span class="material-icons phoneIcon">phone</span>
                     {{ client.phone }}
                   </p>
                   <p class="card-text">
                     <span class="material-icons mailIcon">email</span>
                     {{ client.email }}
-                  </p> 
+                  </p>
                   <p class="card-text">
                     <span class="material-icons dateIcon">calendar_today</span>
-                    {{ client.date }}</p>
-                    <span class="badge bg-danger">{{client.status}}</span>
-
+                    {{ client.date }}
+                  </p>
+                  <span class="badge bg-danger">{{ client.status }}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-2" [ngClass]="{'phoneColWidth': isMobile}">
+        <div class="col-md-2" [ngClass]="{ phoneColWidth: isMobile }">
           <!-- Contact Made -->
           <div class="example-container">
-            <h2>Contact Made</h2>
-            <div
-            [ngClass]="{'phoneWidth': isMobile}"
-              cdkDropList
-              [cdkDropListData]="contactMade"
-              class="example-list"
-              (cdkDropListDropped)="drop($event)"
-            >
-              <div
-                class="card"
-                style="width: 15.4rem"
-                *ngFor="let client of contactMade | filter:filterText"
-                cdkDrag
-              >
+            <h3>Contact Made</h3>
+            <div class="row idicatorsIconsRow">
+              <div class="col-sm-4 leftIndicatorIcon">
+                <mat-icon>assignment</mat-icon> <span class="totalDealsIndic">{{contactMade?.length}}</span> 
+              </div>
+              <div class="col-sm-4 middleIndicatorIcon">
+                <span class="badge bg-secondary nok"
+                  [matTooltip]="getTotalDealsTooltipText('Contacts Made', contactMade?.length)">NOK</span>
+
+              </div>
+              <div class="col-sm-4 rightIndicatorIcon">
+                <mat-icon matBadge="10">
+                  notifications
+                </mat-icon>
+              </div>
+            </div>
+            <div [ngClass]="{ phoneWidth: isMobile }" cdkDropList [cdkDropListData]="contactMade" class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="card" style="width: 15.4rem" *ngFor="let client of contactMade | filter : filterText ; let i = index" cdkDrag>
                 <div class="card-body">
-                  <h5 class="card-title">{{ client.company }}</h5>
+                  <div class="row">
+                    <div class="col-12 cardHeaderRow">
+                      <h5 class="card-title">{{ client.company }}</h5>
+                      <mat-icon class="moreIcon" [matMenuTriggerFor]="menu">more_horiz</mat-icon>
+                      <mat-menu #menu="matMenu">
+                       <button mat-menu-item>
+                         <mat-icon>edit</mat-icon>
+                         <span>Edit</span>
+                       </button>
+                       <button mat-menu-item disabled>
+                         <mat-icon>history</mat-icon>
+                         <span>View History</span>
+                       </button>
+                       <button mat-menu-item (click)="deleteDeal(i, contactMade)">
+                         <mat-icon>delete</mat-icon>
+                         <span>Delete</span>
+                       </button>
+                     </mat-menu>
+                    </div>
+
+                  </div>
                   <h6 class="card-subtitle mb-2 text-muted">
-                    <span class="badge bg-secondary">{{ client.state }} </span> &nbsp;
-                    <span class="badge bg-primary">{{ client.probability_status }}</span>
+                    <span class="badge bg-secondary" [matTooltip]="getStateToolTiptext(client.state)">{{ client.state }} </span>
+                    &nbsp;
+                    <span class="badge bg-primary pointer" [matTooltip]="getProbabilityStatusToolTipText(client.probability_status)">{{
+                      client.probability_status
+                      }}</span>
                   </h6>
                   <p class="card-text">
                     {{ client.first_name }} {{ client.last_name }}
-                   </p>
+                  </p>
                   <p class="card-text">
-                    <span class="material-icons phoneIcon" >phone</span>
+                    <span class="material-icons phoneIcon">phone</span>
                     {{ client.phone }}
                   </p>
                   <p class="card-text">
                     <span class="material-icons mailIcon">email</span>
                     {{ client.email }}
-                  </p> 
+                  </p>
                   <p class="card-text">
                     <span class="material-icons dateIcon">calendar_today</span>
-                    {{ client.date }}</p>
-                    <span class="badge bg-warning text-dark">{{client.status}}</span>
-
-
+                    {{ client.date }}
+                  </p>
+                  <span class="badge bg-warning text-dark">{{
+                    client.status
+                    }}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-2" [ngClass]="{'phoneColWidth': isMobile}">
+        <div class="col-md-2" [ngClass]="{ phoneColWidth: isMobile }">
           <!-- Offer sent -->
           <div class="example-container">
-            <h2>Offer sent</h2>
-            <div
-            [ngClass]="{'phoneWidth': isMobile}"
-              cdkDropList
-              [cdkDropListData]="offerSent"
-              class="example-list"
-              (cdkDropListDropped)="drop($event)"
-            >
-              <div
-                class="card"
-                style="width: 15.4rem"
-                *ngFor="let client of offerSent | filter:filterText"
-                cdkDrag
-              >
+            <h3>Offer sent</h3>
+            <div class="row idicatorsIconsRow">
+              <div class="col-sm-4 leftIndicatorIcon">
+                <mat-icon>assignment</mat-icon> <span class="totalDealsIndic">{{offerSent?.length}}</span> 
+              </div>
+              <div class="col-sm-4 middleIndicatorIcon">
+                <span class="badge bg-secondary nok"
+                  [matTooltip]="getTotalDealsTooltipText('Offer Sent', offerSent?.length)">NOK</span>
+
+              </div>
+              <div class="col-sm-4 rightIndicatorIcon">
+                <mat-icon matBadge="10">
+                  notifications
+                </mat-icon>
+              </div>
+            </div>
+            <div [ngClass]="{ phoneWidth: isMobile }" cdkDropList [cdkDropListData]="offerSent" class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="card" style="width: 15.4rem" *ngFor="let client of offerSent | filter : filterText; let i=index" cdkDrag>
                 <div class="card-body">
-                  <h5 class="card-title">{{ client.company }}</h5>
+                  <div class="row">
+                    <div class="col-12 cardHeaderRow">
+                      <h5 class="card-title">{{ client.company }}</h5>  
+                      <mat-icon class="moreIcon" [matMenuTriggerFor]="menu">more_horiz</mat-icon>
+                      <mat-menu #menu="matMenu">
+                       <button mat-menu-item>
+                         <mat-icon>edit</mat-icon>
+                         <span>Edit</span>
+                       </button>
+                       <button mat-menu-item disabled>
+                         <mat-icon>history</mat-icon>
+                         <span>View History</span>
+                       </button>
+                       <button mat-menu-item (click)="deleteDeal(i, offerSent)">
+                         <mat-icon>delete</mat-icon>
+                         <span>Delete</span>
+                       </button>
+                     </mat-menu>
+                    </div>
+
+                  </div>
                   <h6 class="card-subtitle mb-2 text-muted">
-                    <span class="badge bg-secondary">{{ client.state }} </span> &nbsp;
-                    <span class="badge bg-primary">{{ client.probability_status }}</span>
+                    <span class="badge bg-secondary" [matTooltip]="getStateToolTiptext(client.state)">{{ client.state }} </span>
+                    &nbsp;
+                    <span class="badge bg-primary pointer" [matTooltip]="getProbabilityStatusToolTipText(client.probability_status)">{{
+                      client.probability_status
+                      }}</span>
                   </h6>
                   <p class="card-text">
                     {{ client.first_name }} {{ client.last_name }}
-                   </p>
+                  </p>
                   <p class="card-text">
-                    <span class="material-icons phoneIcon" >phone</span>
+                    <span class="material-icons phoneIcon">phone</span>
                     {{ client.phone }}
                   </p>
                   <p class="card-text">
                     <span class="material-icons mailIcon">email</span>
                     {{ client.email }}
-                  </p> 
+                  </p>
                   <p class="card-text">
                     <span class="material-icons dateIcon">calendar_today</span>
-                    {{ client.date }}</p>
-                    <span class="badge bg-info text-dark">{{client.status}}</span>
-                    
-
+                    {{ client.date }}
+                  </p>
+                  <span class="badge bg-info text-dark">{{
+                    client.status
+                    }}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-2" [ngClass]="{'phoneColWidth': isMobile}">
+        <div class="col-lg-2" [ngClass]="{ phoneColWidth: isMobile }">
           <!-- Getting Ready -->
           <div class="example-container">
-            <h2>Getting Ready</h2>
-            <div
-            [ngClass]="{'phoneWidth': isMobile}"
-              cdkDropList
-              [cdkDropListData]="gettingReady"
-              class="example-list"
-              (cdkDropListDropped)="drop($event)"
-            >
-              <div
-                class="card"
-                style="width: 15.4rem"
-                *ngFor="let client of gettingReady | filter:filterText"
-                cdkDrag
-              >
+            <h3>Getting Ready</h3>
+
+            <div class="row idicatorsIconsRow">
+              <div class="col-sm-4 leftIndicatorIcon">
+                 <mat-icon>assignment</mat-icon> <span class="totalDealsIndic">{{gettingReady?.length}}</span> 
+              </div>
+              <div class="col-sm-4 middleIndicatorIcon">
+                <span class="badge bg-secondary nok" matTooltipClass="line-broken-tooltip"
+                  matTooltipClass="line-broken-tooltip"
+                  [matTooltip]="getTotalDealsTooltipText('Getting Ready', gettingReady?.length)">NOK</span>
+
+              </div>
+              <div class="col-sm-4 rightIndicatorIcon">
+                <mat-icon matBadge="10">
+                  notifications
+                </mat-icon>
+              </div>
+            </div>
+            <div [ngClass]="{ phoneWidth: isMobile }" cdkDropList [cdkDropListData]="gettingReady" class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="card" style="width: 15.4rem" *ngFor="let client of gettingReady | filter : filterText; let i = index"
+                cdkDrag>
                 <div class="card-body">
-                  <h5 class="card-title">{{ client.company }}</h5>
+                  <div class="row">
+                    <div class="col-12 cardHeaderRow">
+                      <h5 class="card-title">{{ client.company }}</h5>
+                         <mat-icon class="moreIcon" [matMenuTriggerFor]="menu">more_horiz</mat-icon>
+                         <mat-menu #menu="matMenu">
+                          <button mat-menu-item>
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                          </button>
+                          <button mat-menu-item disabled>
+                            <mat-icon>history</mat-icon>
+                            <span>View History</span>
+                          </button>
+                          <button mat-menu-item (click)="deleteDeal(i, gettingReady)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                          </button>
+                        </mat-menu>
+                    </div>
+
+                  </div>
                   <h6 class="card-subtitle mb-2 text-muted">
-                    <span class="badge bg-secondary">{{ client.state }} </span> &nbsp;
-                    <span class="badge bg-primary">{{ client.probability_status }}</span>
+                    <span class="badge bg-secondary" [matTooltip]="getStateToolTiptext(client.state)">{{ client.state }} </span>
+                    &nbsp;
+                    <span class="badge bg-primary pointer" [matTooltip]="getProbabilityStatusToolTipText(client.probability_status)">{{
+                      client.probability_status
+                      }}</span>
                   </h6>
                   <p class="card-text">
                     {{ client.first_name }} {{ client.last_name }}
                   </p>
                   <p class="card-text">
-                    <span class="material-icons phoneIcon" >phone</span>
+                    <span class="material-icons phoneIcon">phone</span>
                     {{ client.phone }}
-                  </p> 
+                  </p>
                   <p class="card-text">
                     <span class="material-icons mailIcon">email</span>
                     {{ client.email }}
-                  </p> 
+                  </p>
                   <p class="card-text">
                     <span class="material-icons dateIcon">calendar_today</span>
-                    {{ client.date }}</p>
+                    {{ client.date }}
+                  </p>
 
-                    <span class="badge bg-light text-dark">{{client.status}}</span>
-
+                  <span class="badge bg-light text-dark">{{
+                    client.status
+                    }}</span>
                 </div>
               </div>
             </div>

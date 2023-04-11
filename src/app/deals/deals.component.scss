@@ -13,12 +13,13 @@
 
 .example-list {
     border: solid 1px #ccc;
-    min-height: 60px;
+    min-height: 36rem;
     background: white;
     border-radius: 4px;
     overflow: hidden;
     display: block;
     width: 110%;
+    background-color: #dae0e6;
 }
 
 .example-box {
@@ -121,4 +122,58 @@ p {
 
     position: relative;
     top: 8px
+}
+
+.idicatorsIconsRow {
+    margin: 3px;
+}
+
+.leftIndicatorIcon {
+    opacity: 0.5;
+}
+
+.middleIndicatorIcon {
+    display: flex;
+    justify-content: center;
+    opacity: 0.5;
+    align-items: center;
+    cursor: pointer;
+}
+
+.rightIndicatorIcon {
+    display: flex;
+    justify-content: end;
+    opacity: 0.5;
+}
+
+::ng-deep .line-broken-tooltip {
+    white-space: pre-line;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.totalDealsIndic {
+
+    position: relative;
+    font-weight: bold;
+    bottom: 6px;
+
+}
+
+.nok {
+    position: relative;
+    bottom: 2px;
+}
+
+.cardHeaderRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.moreIcon {
+    position: relative;
+    top: 4px;
+    cursor: pointer;
 }
