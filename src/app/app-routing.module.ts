@@ -3,11 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { DealsComponent } from './deals/deals.component';
 
 const routes: Routes = [
-  {path: 'deals', component: DealsComponent}
+  { path: '', component: DealsComponent },
+  // { path: 'deals', component: DealsComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
