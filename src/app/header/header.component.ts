@@ -11,8 +11,8 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
-  deals!: Observable<Deal[]> | any;
-  newClients!: Observable<Deal[]> | any;
+  deals!: Deal[] | any;
+  newClients!: Number;
   isMobile = false;
 
   constructor(
@@ -32,8 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscription = this.ds.fetchData().subscribe((data: any) => {
       this.deals = data.deals;
       this.newClients = this.deals.filter(
-        (client: Deal) => client.state === 'New'
-      ).length;
+        (client: Deal) => client.state === 'New').length;
     });
   }
 

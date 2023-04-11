@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, AfterViewChecked, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Deal } from './deal.model';
 import { DataService } from '../shared/data.service';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -27,26 +27,7 @@ export class DealsComponent implements OnInit, AfterViewChecked, OnDestroy {
   constructor(private ds: DataService, private responsive: BreakpointObserver) {}
  
 
-  drop(event: CdkDragDrop<Deal[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-      this.resetStatus('Potential Value', this.potentialValue);
-      this.resetStatus('Focus', this.focus);
-      this.resetStatus('Contact Made', this.contactMade);
-      this.resetStatus('Offer Sent', this.offerSent);
-      this.resetStatus('Getting Ready', this.gettingReady);
-
-
-    }
-  }
  
   async ngOnInit() {
     //detecting mobile view 
@@ -89,18 +70,26 @@ export class DealsComponent implements OnInit, AfterViewChecked, OnDestroy {
      if(newlyAddedDeal) newlyAddedDeal.status = status;
    };
 
-   addDeal() {
-    this.focus.push({
-      id: 0,
-      first_name: '',
-      last_name: '',
-      email: '',
-      phone: '',
-      company: '',
-      status: '',
-      date: '',
-      probability_status: '',
-      state: ''
-    })
-   }
+   drop(event: CdkDragDrop<Deal[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+      this.resetStatus('Potential Value', this.potentialValue);
+      this.resetStatus('Focus', this.focus);
+      this.resetStatus('Contact Made', this.contactMade);
+      this.resetStatus('Offer Sent', this.offerSent);
+      this.resetStatus('Getting Ready', this.gettingReady);
+
+
+    }
+  }
+
+  
 }

@@ -112,5 +112,11 @@ img {
     color:  rgb(3, 3, 129);
     opacity:  1;
     font-weight: bold;
-
 }   
+
+.logo {
+    display: flex;
+    position: relative;
+    justify-content: end;
+    bottom: 3px;
+}
