@@ -77,7 +77,7 @@ export class DealsComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   ngAfterViewChecked() {
-    console.log('deals', this.deals)
+    // console.log('deals', this.deals)
   };
 
   filtering(deals:Array<Deal>, status: string ) {
