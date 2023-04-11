@@ -1,0 +1,64 @@
+<nav class="navbar navbar-light headerBorder">
+  <div
+    class="row m-0"
+    style="width: 95%; height: 30px; justify-content: space-between"
+  >
+    <div class="col-5">
+      <span class="navbar-brand mb-0 h1 headerFont"
+        >Nor-Shipping 2019 <mat-icon style="position:relative; top:5px">unfold_more</mat-icon></span>
+    </div>
+
+    <div class="col-7 rightCol" *ngIf="!isMobile">
+      <div class="col-1 smallCols" style="width: 15%">
+        <div class="vLinePink"></div>
+        <div class="scmallColsContent">
+          <p class="labelFontStyle">DEALS</p>
+          <p class="dataFontStyle">{{deals?.length}}</p>
+        </div>
+      </div>
+      <div class="col-1 smallCols" style="width: 25%">
+        <div class="vLinePurple"></div>
+        <div class="scmallColsContent">
+          <p class="labelFontStyle">TOTAL VALUE [NOK]</p>
+          <p class="dataFontStyle">209</p>
+        </div>
+      </div>
+      <div class="col-1 smallCols" style="width: 15%">
+        <div class="vLineCyan"></div>
+        <div class="scmallColsContent">
+          <p class="labelFontStyle">HIT RATE</p>
+          <p class="dataFontStyle">209</p>
+        </div>
+      </div>
+      <div class="col-1 smallCols" style="width: 15%">
+        <div class="vLineGreen"></div>
+        <div class="scmallColsContent">
+          <p class="labelFontStyle">DEALS WON</p>
+          <p class="dataFontStyle">209</p>
+        </div>
+      </div>
+      <div class="col-1 smallCols" style="width: 20%">
+        <div class="vLineOrange"></div>
+        <div class="scmallColsContent">
+          <p class="labelFontStyle">NEW CLIENTS</p>
+          <p class="dataFontStyle">{{newClients}}</p>
+        </div>
+      </div>
+
+      <div class="col-2 image imageCol" style="width: 15%">
+        <img src="../../assets/imgs/male-placeholder-image.jpeg" />
+        <div ngbDropdown class="dropdown">
+            <button ngbDropdownToggle class="btn " type="button"  aria-expanded="false">
+           
+          </button>
+            <ul ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
+              <li><a ngbDropdownItem href="#">Settings</a></li>
+              <li><a ngbDropdownItem href="#">My Team</a></li>
+              <li><a ngbDropdownItem href="#">Log out</a></li>
+            </ul>
+          </div>
+      </div>
+    </div>
+  </div>
+</nav>
+ 
