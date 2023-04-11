@@ -40,8 +40,8 @@ for some icons i used fontawesome
 Run "npm i angular-font-awesome" and add "node_modules/@fortawesome/fontawesome-free/js/all.js" to scripts array 
 and "node_modules/@fortawesome/fontawesome-free/css/all.css" to styles array in angular.json file.
 
-##Important Navigate to Deals tabs to get the deals !
+## Important Navigate to Deals tabs to get the deals !
 
-##Search functionality working based on first name, last name or email.
+## Search functionality working based on first name, last name or email.
 
-##Deal status updates when its moved to different stage.
+## Deal status updates when its moved to different stage.
